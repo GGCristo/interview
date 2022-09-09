@@ -1,3 +1,5 @@
+#pragma once
+
 #include "./gender.hpp"
 #include <ostream>
 #include <string>
