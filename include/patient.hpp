@@ -1,19 +1,22 @@
 #pragma once
 
-#include "./gender.hpp"
+#include "./person.hpp"
+#include <algorithm>
 #include <ostream>
 #include <string>
+#include <utility>
 #include <vector>
 
-class Patient {
-private:
-  std::string name_;
-  Gender gender_;
-  int age_;
-  std::vector<std::string> notes_;
+class Patient : public Person {
 public:
-  Patient();
-  Patient(std::string name, Gender gender, int age);
+  template <typename... T>
+  Patient(std::string name, Gender gender, int age, const T... notes)
+      : Person(std::move(name), gender, age) {
+    (notes_.push_back(notes), ...);
+  }
   void addNote(const std::string &note);
-  std::ostream& show(std::ostream &os) const;
+  std::ostream &show(std::ostream &os) const override;
+
+private:
+  std::vector<std::string> notes_;
 };
