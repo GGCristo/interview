@@ -6,6 +6,7 @@ set(SOURCES
   src/patient.cpp
   src/person.cpp
   src/doctor.cpp
+  src/combGenerator.cpp
   src/registry.cpp
 )
 

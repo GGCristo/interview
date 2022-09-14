@@ -2,8 +2,8 @@
 
 #include "../include/doctor.hpp"
 
-Doctor::Doctor(std::string name, Gender gender, int age, Specialty specialty)
-    : Person(std::move(name), gender, age), specialty_(specialty) {}
+Doctor::Doctor(std::string name, int age, Gender gender, Specialty specialty)
+    : Person(std::move(name), gender, Status::employee, age), specialty_(specialty) {}
 
 std::ostream &Doctor::show(std::ostream &os) const {
   const auto *delimiter = "----------\n";

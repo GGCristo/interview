@@ -3,7 +3,6 @@
 #include <ostream>
 #include "person.hpp"
 
-// TODO: add namespace
 enum class Specialty {
   Allergists,
   Anesthesiologists,
@@ -31,7 +30,7 @@ class Doctor : public Person {
 private:
   Specialty specialty_;
 public:
-  Doctor(std::string name, Gender gender, int age, Specialty specialty);
+  Doctor(std::string name, int age, Gender gender, Specialty specialty);
   [[nodiscard]] Specialty getSpecialty() const;
   std::ostream &show(std::ostream &os) const override;
 };

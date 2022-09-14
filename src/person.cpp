@@ -3,14 +3,40 @@
 
 #include "../include/person.hpp"
 
-Person::Person(std::string name, Gender gender, int age)
-    : name_(std::move(name)), gender_(gender), age_(age){};
+CombGenerator Person::
+    combGenerator_( // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
+        idSize);
 
-std::string Person::getName() const { return name_; }
+Person::Person(std::string name, Gender gender, Status status, int age)
+    : name_(std::move(name)), gender_(gender), status_(status), age_(age) {
+  std::optional<std::string> mrn = Person::combGenerator_.next();
+  if (mrn) {
+    MRN_ = *mrn;
+  } else {
+    throw "Pepe";
+  }
+};
 
-Gender Person::getGender() const { return gender_; }
+Person::~Person() {
+  if (!MRN_.empty()) {
+    std::cout << "Liberando numero de: " << name_ << '\n';
+    Person::combGenerator_.free(MRN_);
+  }
+}
 
-int Person::getAge() const { return age_; }
+Person::Person(Person &&o) noexcept
+    : MRN_(std::move(o.MRN_)), name_(std::move(o.name_)), gender_(o.gender_),
+      status_(o.status_), age_(o.age_) {
+  o.MRN_ = "";
+}
+
+std::string Person::getName() const noexcept { return name_; }
+
+Gender Person::getGender() const noexcept { return gender_; }
+
+int Person::getAge() const noexcept { return age_; }
+
+Status Person::getStatus() const noexcept { return status_; };
 
 std::ostream &Person::show(std::ostream &os) const {
   os << "Name: " << name_ << '\n';
