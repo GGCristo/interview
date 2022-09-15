@@ -1,4 +1,4 @@
-#include "../include/registry.hpp"
+#include "../include/registry/registry.hpp"
 
 Registry::Registry(WlStrategy wlStrategy) : waitingList_(wlStrategy) {}
 

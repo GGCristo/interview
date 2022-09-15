@@ -1,10 +1,10 @@
 #pragma once
 
-#include "person.hpp"
+#include "../person/person.hpp"
 #include "queueStrategyHeap.hpp"
 #include "queueStrategyI.hpp"
 #include "queueStrategySort.hpp"
-#include "utils.hpp"
+#include "../utils.hpp"
 #include <memory>
 #include <vector>
 

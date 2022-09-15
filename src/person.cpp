@@ -1,4 +1,4 @@
-#include "../include/person.hpp"
+#include "../include/person/person.hpp"
 
 CombGenerator Person::
     combGenerator_( // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)

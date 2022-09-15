@@ -1,6 +1,6 @@
 #include <utility>
 
-#include "../include/doctor.hpp"
+#include "../include/person/doctor.hpp"
 
 Doctor::Doctor(std::string name, int age, Gender gender, Specialty specialty)
     : Person(std::move(name), gender, Status::employee, age), specialty_(specialty) {}

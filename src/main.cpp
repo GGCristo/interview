@@ -1,8 +1,9 @@
-#include "../include/doctor.hpp"
-#include "../include/patient.hpp"
-#include "../include/registry.hpp"
-#include "../include/queueStrategyHeap.hpp"
-#include "../include/queueStrategySort.hpp"
+#include "../include/person/doctor.hpp"
+#include "../include/person/patient.hpp"
+#include "../include/registry/queueStrategyHeap.hpp"
+#include "../include/registry/queueStrategySort.hpp"
+#include "../include/registry/registry.hpp"
+
 #include <iostream>
 #include <memory>
 
