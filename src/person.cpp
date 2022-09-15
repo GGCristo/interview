@@ -1,6 +1,3 @@
-#include <iostream>
-#include <utility>
-
 #include "../include/person.hpp"
 
 CombGenerator Person::
@@ -13,13 +10,12 @@ Person::Person(std::string name, Gender gender, Status status, int age)
   if (mrn) {
     MRN_ = *mrn;
   } else {
-    throw "Pepe";
+    throw "Pepe"; // TODO
   }
 };
 
 Person::~Person() {
   if (!MRN_.empty()) {
-    std::cout << "Liberando numero de: " << name_ << '\n';
     Person::combGenerator_.free(MRN_);
   }
 }
@@ -37,6 +33,8 @@ Gender Person::getGender() const noexcept { return gender_; }
 int Person::getAge() const noexcept { return age_; }
 
 Status Person::getStatus() const noexcept { return status_; };
+
+std::string Person::getMRN() const noexcept { return MRN_; };
 
 std::ostream &Person::show(std::ostream &os) const {
   os << "Name: " << name_ << '\n';

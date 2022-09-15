@@ -1,7 +1,6 @@
 #pragma once
 #include <ostream>
 #include <string>
-#include <iostream> // TODO delete
 
 #include "combGenerator.hpp"
 
@@ -24,15 +23,17 @@ constexpr size_t idSize = 5;
 class Person {
 public:
   virtual ~Person();
-  Person(Person&& o) noexcept;
-  Person(const Person&) = delete;
-  Person operator=(const Person&) = delete;
-  Person operator=(Person&&) = delete;
+  Person(Person &&o) noexcept;
+  Person(const Person &) = delete;
+  Person operator=(const Person &) = delete;
+  Person operator=(Person &&) = delete;
 
   [[nodiscard]] std::string getName() const noexcept;
   [[nodiscard]] Gender getGender() const noexcept;
   [[nodiscard]] Status getStatus() const noexcept;
   [[nodiscard]] int getAge() const noexcept;
+  [[nodiscard]] std::string getMRN() const noexcept;
+
   virtual std::ostream &show(std::ostream &os) const;
 
 protected:
