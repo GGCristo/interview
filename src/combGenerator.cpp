@@ -16,6 +16,6 @@ std::optional<std::string> CombGenerator::next() {
   return std::string(size_ - strN.size(), '0') + strN;
 }
 
-void CombGenerator::free(std::string &freeNumber) {
+void CombGenerator::free(std::string freeNumber) {
   freeNumbers_.push(std::move(freeNumber));
 }

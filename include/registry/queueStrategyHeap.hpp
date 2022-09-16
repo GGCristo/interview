@@ -4,8 +4,8 @@
 #include <algorithm>
 // Heap:
 // Insert: logn ||
-// Pick: logn ||
 // Delete: nlogn
+// Pick: logn ||
 template <typename Container, typename T>
 class QueueStrategyHeap : public QueueStrategyI<Container, T> {
   void Insert(Container &container, T &&value) override {

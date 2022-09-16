@@ -1,15 +1,16 @@
 #pragma once
 
-#include "../person/person.hpp"
-#include "queueStrategyHeap.hpp"
-#include "queueStrategyI.hpp"
-#include "queueStrategySort.hpp"
-#include "../utils.hpp"
+#include <fmt/ranges.h>
+
+#include <iostream>
 #include <memory>
 #include <vector>
 
-// Medical Registry Number
-using MRN = std::string;
+#include "../person/person.hpp"
+#include "../utils.hpp"
+#include "queueStrategyHeap.hpp"
+#include "queueStrategyI.hpp"
+#include "queueStrategySort.hpp"
 
 enum class WlStrategy {
   heap,
@@ -19,34 +20,36 @@ enum class WlStrategy {
 // Containers: std::vector, std::deque, std::list.
 template <typename Container, typename Element>
 class WaitingList {
-public:
+ public:
   explicit WaitingList(WlStrategy WlStrategy = WlStrategy::heap) {
     switch (WlStrategy) {
-    case WlStrategy::heap:
-      queueStrategy_ = std::make_unique<QueueStrategyHeap<Container, Element>>();
-      break;
-    case WlStrategy::sort:
-      // queueStrategy_ = std::make_unique<QueueStrategySort<Container, Element>>();
-      break;
+      case WlStrategy::heap:
+        queueStrategy_ =
+            std::make_unique<QueueStrategyHeap<Container, Element>>();
+        break;
+      case WlStrategy::sort:
+        queueStrategy_ =
+            std::make_unique<QueueStrategySort<Container, Element>>();
+        break;
     }
   }
 
-  void Insert(Element &&value) {
+  void Insert(Element&& value) {
     queueStrategy_->Insert(container_, std::move(value));
   }
 
-  void Remove(const Element &value) {
+  void Remove(const Element& value) {
     queueStrategy_->Remove(container_, value);
   }
 
   Element Pick() { return queueStrategy_->Pick(container_); }
 
   std::ostream& show(std::ostream& os) const {
-    // return print(container_);
-    return os;
+    std::cout << "[Waiting List]\n";
+    return os << fmt::format("{}\n", container_);
   }
 
-private:
+ private:
   Container container_;
   std::unique_ptr<QueueStrategyI<Container, Element>> queueStrategy_;
 };

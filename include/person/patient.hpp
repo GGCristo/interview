@@ -18,8 +18,10 @@ public:
     (notes_.push_back(notes), ...);
   }
   void addNote(const std::string &note);
-  std::ostream &show(std::ostream &os) const override;
+  std::ostream &print(std::ostream &os) const override;
 
 private:
   std::vector<std::string> notes_;
 };
+
+std::ostream &operator<<(std::ostream &os, const Patient& p);

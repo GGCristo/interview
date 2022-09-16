@@ -36,21 +36,10 @@ Status Person::getStatus() const noexcept { return status_; };
 
 std::string Person::getMRN() const noexcept { return MRN_; };
 
-std::ostream &Person::show(std::ostream &os) const {
-  os << "Name: " << name_ << '\n';
-  os << "Age: " << age_ << '\n';
-  os << "Gender: ";
-  switch (gender_) {
-  case Gender::male:
-    os << "Male";
-    break;
-  case Gender::female:
-    os << "Female";
-    break;
-  case Gender::other:
-    os << "Other";
-    break;
-  }
-  os << '\n';
-  return os;
+std::ostream &Person::print(std::ostream &os) const {
+  return os << fmt::format("Name: {}, Age: {}, Gender {}\n", name_, age_, gender_);
+}
+
+std::ostream &operator<<(std::ostream &os, const Person &p) {
+  return p.print(os);
 }
