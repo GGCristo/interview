@@ -1,6 +1,5 @@
-#include <gtest/gtest.h>
-#include <iostream>
-int main() {
-  testing::InitGoogleTest();
-  return RUN_ALL_TESTS();
+#include <catch2/catch_test_macros.hpp>
+
+TEST_CASE("Waiting list [[std::vector]]") {
+  REQUIRE(1 != 1);
 }

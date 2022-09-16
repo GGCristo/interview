@@ -15,7 +15,6 @@ int main() {
       std::make_unique<Doctor>("Manolo", 22, Gender::other, Specialty::Anesthesiologists));
   registry.add(std::make_unique<Patient>("Carla", 22, Gender::other, Status::slightIllness));
   std::cout << registry;
-  // registry.show(std::cout);
   registry.showWaitingList(std::cout);
   return 0;
 }
