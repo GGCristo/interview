@@ -3,7 +3,6 @@
 Registry::Registry(WlStrategy wlStrategy) : waitingList_(wlStrategy) {}
 
 void Registry::add(std::unique_ptr<Person> &&person) {
-    std::cout << "Hello\n";
   const std::string mrn = person->getMRN();
   const Status status = person->getStatus();
   const auto inserted = registry_.insert({mrn, std::move(person)});

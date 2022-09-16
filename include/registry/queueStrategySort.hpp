@@ -31,6 +31,10 @@ class QueueStrategySort : public QueueStrategyI<Container, T> {
   }
 
   std::optional<T> Pick(Container &container) override {
+    if (container.empty()) {
+      dout("QueueStrategySort, Pick. Empty container");
+      return std::nullopt;
+    }
     const auto last = std::move(container.back());
     container.pop_back();
     return last;
