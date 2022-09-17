@@ -2,6 +2,7 @@
 
 #include "queueStrategyI.hpp"
 #include <algorithm>
+
 // Heap:
 // Insert: logn ||
 // Delete: nlogn
@@ -9,7 +10,7 @@
 template <typename Container, typename T>
 class QueueStrategyHeap : public QueueStrategyI<Container, T> {
   void Insert(Container &container, T &&value) override {
-    container.push_back(std::move(value));
+    container.push_back(std::forward<T>(value));
     std::push_heap(container.begin(), container.end());
   }
 
