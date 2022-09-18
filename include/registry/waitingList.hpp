@@ -15,7 +15,7 @@
 #include "queueStrategyI.hpp"
 #include "queueStrategySort.hpp"
 
-// Containers: std::vector, std::deque.
+// Containers: std::vector, std::deque, std::list (only sort).
 template <typename Container>
 class WaitingList {
   using Element = typename Container::value_type;

@@ -2,10 +2,25 @@
 #include <deque>
 #include <list>
 #include <registry/waitingList.hpp>
+#include <string_view>
 
-template <typename SubContainer, typename Strategy = typename Strategy<SubContainer>>
-void test() {
-  WaitingList<SubContainer> container(std::make_unique<Strategy<SubContainer>>());
+using Pair = std::pair<int, std::string>;
+
+using Vec = std::vector<int>;
+
+using VecPair = std::vector<Pair>;
+
+using Deq = std::deque<int>;
+
+using DeqPair = std::deque<Pair>;
+
+using List = std::list<int>;
+
+using ListPair = std::list<Pair>;
+
+template <typename Container, typename Strategy>
+void wlTest() {
+  WaitingList<Container> container(std::make_unique<Strategy>());
   REQUIRE(dynamic_cast<Strategy*>(
               container.strategy().get()) != nullptr);
   SECTION("Basic Insert") {
@@ -26,24 +41,65 @@ void test() {
   }
 }
 
-TEST_CASE("Waiting list. vector heap") {
-  test<std::vector<int>, QueueStrategyHeap<std::vector<int>>>();
+template <typename Container, typename Strategy>
+void wlTestPair() {
+  WaitingList<Container> container(std::make_unique<Strategy>());
+  REQUIRE(dynamic_cast<Strategy*>(
+              container.strategy().get()) != nullptr);
+  SECTION("Basic Insert") {
+    container.Insert({1, "uno"});
+    REQUIRE(container.size() == 1);
+    SECTION("Basic Remove") {
+      container.Remove({1, "uno"});
+      REQUIRE(container.size() == 0);
+    }
+    SECTION("Remove non existing value") {
+      REQUIRE_NOTHROW(container.Remove({0, "cero"}));
+      REQUIRE(container.size() == 1);
+    }
+  }
+  SECTION("Remove empty") {
+    REQUIRE_NOTHROW(container.Remove({4, "I shouldn't be here"}));
+    REQUIRE(container.size() == 0);
+  }
 }
-//
-// TEST_CASE("Waiting list. vector sort") {
-//   WaitingList<std::vector<int>, int> container(WlStrategy::sort);
-//   REQUIRE(container.strategy() == WlStrategy::sort);
-//   test(container);
-// }
-//
-// TEST_CASE("Waiting list. deque heap") {
-//   WaitingList<std::deque<int>, int> container;
-//   REQUIRE(container.strategy() == WlStrategy::heap);
-//   test(container);
-// }
-//
-// TEST_CASE("Waiting list. deque sort") {
-//   WaitingList<std::deque<int>, int> container(WlStrategy::sort);
-//   REQUIRE(container.strategy() == WlStrategy::sort);
-//   test(container);
-// }
+
+TEST_CASE("Waiting list. vectorInt heap") {
+  wlTest<Vec, QueueStrategyHeap<Vec>>();
+}
+
+TEST_CASE("Waiting list. vectorInt sort") {
+  wlTest<Vec, QueueStrategySort<Vec>>();
+}
+
+TEST_CASE("Waiting list. vectorPair heap") {
+  wlTestPair<VecPair, QueueStrategySort<VecPair>>();
+}
+
+TEST_CASE("Waiting list. vectorPair sort") {
+  wlTestPair<VecPair, QueueStrategySort<VecPair>>();
+}
+
+TEST_CASE("Waiting list. dequeInt heap") {
+  wlTest<Deq, QueueStrategyHeap<Deq>>();
+}
+
+TEST_CASE("Waiting list. deque sort") {
+  wlTest<Deq, QueueStrategySort<Deq>>();
+}
+
+TEST_CASE("Waiting list. dequePair heap") {
+  wlTestPair<DeqPair, QueueStrategyHeap<DeqPair>>();
+}
+
+TEST_CASE("Waiting list. dequePair sort") {
+  wlTestPair<DeqPair, QueueStrategySort<DeqPair>>();
+}
+
+TEST_CASE("Waiting list. listInt sort") {
+  wlTest<List, QueueStrategySort<List>>();
+}
+
+TEST_CASE("Waiting list. listPair sort") {
+  wlTestPair<ListPair, QueueStrategySort<ListPair>>();
+}
