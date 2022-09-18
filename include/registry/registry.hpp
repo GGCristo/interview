@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../person/patient.hpp"
-#include "../person/person.hpp"
-#include "waitingList.hpp"
+#include <person/patient.hpp>
+#include <person/person.hpp>
+#include <registry/waitingList.hpp>
 
 #include <algorithm>
 #include <cassert>

@@ -2,8 +2,8 @@
 
 #include <algorithm>
 
-#include "../utils.hpp"
-#include "queueStrategyI.hpp"
+#include <utils.hpp>
+#include <registry/queueStrategyI.hpp>
 
 // Sort:
 // Insert: nlogn

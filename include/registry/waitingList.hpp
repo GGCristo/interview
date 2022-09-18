@@ -9,11 +9,11 @@
 #include <memory>
 #include <vector>
 
-#include "../person/person.hpp"
-#include "../utils.hpp"
-#include "queueStrategyHeap.hpp"
-#include "queueStrategyI.hpp"
-#include "queueStrategySort.hpp"
+#include <person/person.hpp>
+#include <utils.hpp>
+#include <registry/queueStrategyHeap.hpp>
+#include <registry/queueStrategyI.hpp>
+#include <registry/queueStrategySort.hpp>
 
 // Containers: std::vector, std::deque, std::list (only sort).
 template <typename Container>

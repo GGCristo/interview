@@ -4,9 +4,9 @@
 #include <queue>
 #include <string>
 
-class CombGenerator {
+class NumGenerator {
 public:
-  explicit CombGenerator(size_t size) noexcept;
+  explicit NumGenerator(size_t size) noexcept;
   std::optional<std::string> next();
   void free(std::string freeNumber);
 

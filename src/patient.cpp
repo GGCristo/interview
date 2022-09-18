@@ -1,7 +1,8 @@
-#include <iostream>
-#include <utility>
+#include "../include/person/patient.h"
 
-#include "../include/person/patient.hpp"
+#include <iostream>
+#include <stdexcept>
+#include <utility>
 
 void Patient::addNote(const std::string &note) { notes_.push_back(note); }
 

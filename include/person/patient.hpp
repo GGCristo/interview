@@ -1,6 +1,5 @@
 #pragma once
 
-#include "./person.hpp"
 #include <algorithm>
 #include <cassert>
 #include <ostream>
@@ -8,8 +7,10 @@
 #include <utility>
 #include <vector>
 
+#include <person/person.hpp>
+
 class Patient : public Person {
-public:
+ public:
   template <typename... T>
   Patient(std::string name, int age, Gender gender, PersonCondition status,
           const T... notes)
@@ -20,8 +21,8 @@ public:
   void addNote(const std::string &note);
   std::ostream &print(std::ostream &os) const override;
 
-private:
+ private:
   std::vector<std::string> notes_;
 };
 
-std::ostream &operator<<(std::ostream &os, const Patient& p);
+std::ostream &operator<<(std::ostream &os, const Patient &p);

@@ -1,9 +1,9 @@
-#include "../include/person/combGenerator.hpp"
+#include "../include/person/combGenerator.h"
 #include <algorithm>
 
-CombGenerator::CombGenerator(std::size_t size) noexcept : size_(size) {}
+NumGenerator::NumGenerator(std::size_t size) noexcept : size_(size) {}
 
-std::optional<std::string> CombGenerator::next() {
+std::optional<std::string> NumGenerator::next() {
   if (!freeNumbers_.empty()) {
     std::string strN = freeNumbers_.front();
     freeNumbers_.pop();
@@ -16,6 +16,6 @@ std::optional<std::string> CombGenerator::next() {
   return std::string(size_ - strN.size(), '0') + strN;
 }
 
-void CombGenerator::free(std::string freeNumber) {
+void NumGenerator::free(std::string freeNumber) {
   freeNumbers_.push(std::move(freeNumber));
 }

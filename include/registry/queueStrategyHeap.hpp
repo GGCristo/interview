@@ -1,6 +1,6 @@
 #pragma once
 
-#include "queueStrategyI.hpp"
+#include <registry/queueStrategyI.hpp>
 #include <algorithm>
 #include <type_traits>
 #include <memory>

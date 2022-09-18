@@ -2,8 +2,8 @@
 #include <ostream>
 #include <string>
 
-#include "../utils.hpp"
-#include "combGenerator.hpp"
+#include <utils.hpp>
+#include <person/combGenerator.hpp>
 
 class Person {
  public:
@@ -38,10 +38,10 @@ class Person {
    * https://github.com/llvm/llvm-project/issues/47384
    * cppcoreguidelines-avoid-non-const-global-variables
    */
-  static CombGenerator
-      combGenerator_;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
+  static NumGenerator
+      numGenerator_;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
   // Medical registry number
-  MRN MRN_;
+  MRN mrn_;
   std::string name_;
   Gender gender_;
   PersonCondition status_;

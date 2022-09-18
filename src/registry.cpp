@@ -1,4 +1,4 @@
-#include "../include/registry/registry.hpp"
+#include <registry/registry.hpp>
 
 Registry::Registry(std::unique_ptr<QueueStrategyI<wl::Container>> &&wlStrategy)
     : waitingList_(std::move(wlStrategy)) {}
@@ -6,10 +6,10 @@ Registry::Registry(std::unique_ptr<QueueStrategyI<wl::Container>> &&wlStrategy)
 void Registry::add(std::unique_ptr<Person> &&person) {
   const std::string mrn = person->getMRN();
   const PersonCondition status = person->getStatus();
-  const auto inserted = registry_.insert({mrn, std::move(person)});
+  const auto [inserted, isInserted] = registry_.insert({mrn, std::move(person)});
   // The generator of combinations should already control that identifiers are
   // unique
-  assert(inserted.second && "MRN identifiers should be unique in the registry");
+  assert(isInserted && "MRN identifiers should be unique in the registry"); // TODO check this
   if (status != PersonCondition::employee) {
     waitingList_.Insert(std::make_pair(status, mrn));
   }

@@ -1,5 +1,5 @@
-file(GLOB SOURCES *.cpp)
-add_executable(Test main.cpp)
+file(GLOB SOURCES CONFIGURE_DEPENDS *.cpp)
+add_executable(Test ${SOURCES})
 target_include_directories(Test PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(Test ${CONAN_LIBS})
 add_test(NAME tests COMMAND Test)
