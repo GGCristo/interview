@@ -13,7 +13,6 @@ public:
 private:
   int number_ = 0;
   size_t size_;
-  // Should I use a std::list as underlying container?
   std::queue<std::string>
       freeNumbers_; // Available numbers to reuse
 };

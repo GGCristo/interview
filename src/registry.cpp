@@ -1,15 +1,16 @@
 #include "../include/registry/registry.hpp"
 
-Registry::Registry(WlStrategy wlStrategy) : waitingList_(wlStrategy) {}
+Registry::Registry(std::unique_ptr<QueueStrategyI<wl::Container>> &&wlStrategy)
+    : waitingList_(std::move(wlStrategy)) {}
 
 void Registry::add(std::unique_ptr<Person> &&person) {
   const std::string mrn = person->getMRN();
-  const Status status = person->getStatus();
+  const PersonCondition status = person->getStatus();
   const auto inserted = registry_.insert({mrn, std::move(person)});
   // The generator of combinations should already control that identifiers are
   // unique
   assert(inserted.second && "MRN identifiers should be unique in the registry");
-  if (status != Status::employee) {
+  if (status != PersonCondition::employee) {
     waitingList_.Insert(std::make_pair(status, mrn));
   }
 }

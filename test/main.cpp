@@ -1,11 +1,13 @@
 #include <catch2/catch_test_macros.hpp>
-#include <registry/waitingList.hpp>
-#include <list>
 #include <deque>
+#include <list>
+#include <registry/waitingList.hpp>
 
-template<typename Container>
-void test(Container& container) {
-  REQUIRE(container.strategy() == WlStrategy::heap);
+template <typename SubContainer, typename Strategy = typename Strategy<SubContainer>>
+void test() {
+  WaitingList<SubContainer> container(std::make_unique<Strategy<SubContainer>>());
+  REQUIRE(dynamic_cast<Strategy*>(
+              container.strategy().get()) != nullptr);
   SECTION("Basic Insert") {
     container.Insert(1);
     REQUIRE(container.size() == 1);
@@ -25,25 +27,23 @@ void test(Container& container) {
 }
 
 TEST_CASE("Waiting list. vector heap") {
-  WaitingList<std::vector<int>, int> container;
-  REQUIRE(container.strategy() == WlStrategy::heap);
-  test(container);
+  test<std::vector<int>, QueueStrategyHeap<std::vector<int>>>();
 }
-
-TEST_CASE("Waiting list. vector sort") {
-  WaitingList<std::vector<int>, int> container(WlStrategy::sort);
-  REQUIRE(container.strategy() == WlStrategy::sort);
-  test(container);
-}
-
-TEST_CASE("Waiting list. deque heap") {
-  WaitingList<std::deque<int>, int> container;
-  REQUIRE(container.strategy() == WlStrategy::heap);
-  test(container);
-}
-
-TEST_CASE("Waiting list. deque sort") {
-  WaitingList<std::deque<int>, int> container(WlStrategy::sort);
-  REQUIRE(container.strategy() == WlStrategy::sort);
-  test(container);
-}
+//
+// TEST_CASE("Waiting list. vector sort") {
+//   WaitingList<std::vector<int>, int> container(WlStrategy::sort);
+//   REQUIRE(container.strategy() == WlStrategy::sort);
+//   test(container);
+// }
+//
+// TEST_CASE("Waiting list. deque heap") {
+//   WaitingList<std::deque<int>, int> container;
+//   REQUIRE(container.strategy() == WlStrategy::heap);
+//   test(container);
+// }
+//
+// TEST_CASE("Waiting list. deque sort") {
+//   WaitingList<std::deque<int>, int> container(WlStrategy::sort);
+//   REQUIRE(container.strategy() == WlStrategy::sort);
+//   test(container);
+// }

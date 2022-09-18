@@ -11,10 +11,10 @@
 class Patient : public Person {
 public:
   template <typename... T>
-  Patient(std::string name, int age, Gender gender, Status status,
+  Patient(std::string name, int age, Gender gender, PersonCondition status,
           const T... notes)
       : Person(std::move(name), gender, status, age) {
-    assert(status != Status::employee);
+    assert(status != PersonCondition::employee);
     (notes_.push_back(notes), ...);
   }
   void addNote(const std::string &note);

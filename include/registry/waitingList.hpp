@@ -15,28 +15,14 @@
 #include "queueStrategyI.hpp"
 #include "queueStrategySort.hpp"
 
-enum class WlStrategy {
-  heap,
-  sort,
-};
-
 // Containers: std::vector, std::deque.
-template <typename Container, typename Element>
+template <typename Container>
 class WaitingList {
+  using Element = typename Container::value_type;
+
  public:
-  explicit WaitingList(WlStrategy WlStrategy = WlStrategy::heap) {
-    switch (WlStrategy) {
-      case WlStrategy::heap:
-        queueStrategy_ =
-            std::make_unique<QueueStrategyHeap<Container, Element>>();
-        strategyName_ = WlStrategy::heap;
-        break;
-      case WlStrategy::sort:
-        queueStrategy_ =
-            std::make_unique<QueueStrategySort<Container, Element>>();
-        strategyName_ = WlStrategy::sort;
-        break;
-    }
+  explicit WaitingList(std::unique_ptr<QueueStrategyI<Container>>&& strategy)
+      : queueStrategy_(std::move(strategy)) {
     assert(queueStrategy_ != nullptr &&
            "QueueStrategy has not been initialized");
   }
@@ -51,9 +37,12 @@ class WaitingList {
 
   Element Pick() { return queueStrategy_->Pick(container_); }
 
-  [[nodiscard]] WlStrategy strategy() const { return strategyName_; }
-
   [[nodiscard]] size_t size() const { return container_.size(); }
+
+  [[nodiscard]] const std::unique_ptr<QueueStrategyI<Container>>&
+  strategy() const {
+    return queueStrategy_;
+  }
 
   // Useful for testing
   bool isPermutation(const Container& other) const {
@@ -68,6 +57,5 @@ class WaitingList {
 
  private:
   Container container_;
-  WlStrategy strategyName_;
-  std::unique_ptr<QueueStrategyI<Container, Element>> queueStrategy_;
+  std::unique_ptr<QueueStrategyI<Container>> queueStrategy_;
 };

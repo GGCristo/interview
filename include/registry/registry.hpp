@@ -11,22 +11,18 @@
 #include <unordered_map>
 #include <vector>
 
-using wlElement = std::pair<Status, MRN>;
-using wlContainer = std::vector<wlElement>;
-
 class Registry {
 public:
-  Registry() = default;
-  explicit Registry(WlStrategy wlStrategy);
+  explicit Registry(std::unique_ptr<QueueStrategyI<wl::Container>> &&wlStrategy);
   void add(std::unique_ptr<Person> &&person);
   void remove(const MRN &);
 
   std::ostream &print(std::ostream &os) const;
-  std::ostream &showWaitingList(std::ostream &os) const;
+  std::ostream &showWaitingList(std::ostream &os) const; // TODO change this
 
 private:
   std::unordered_map<MRN, std::unique_ptr<Person>> registry_;
-  WaitingList<wlContainer, wlElement> waitingList_;
+  WaitingList<wl::Container> waitingList_;
 };
 
 std::ostream &operator<<(std::ostream &os, const Registry& r);
