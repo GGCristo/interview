@@ -5,7 +5,8 @@
 3. Ejecutar CMake:
   - Test: ``cmake -DTEST=OFF [-DCMAKE_BUILD_TYPE=Debug] .. ``
   - App: ``cmake -DTEST=ON [-DCMAKE_BUILD_TYPE=Debug] .. ``
-  La configuración de Debug incluye google sanitizers
+
+  Nota: La configuración de Debug incluye google sanitizers
 4. Compilar ``make``
 ## Run
 ### Test:
