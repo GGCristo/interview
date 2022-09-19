@@ -1,10 +1,14 @@
-#include "../include/person/patient.h"
+#include <person/patient.hpp>
 
 #include <iostream>
 #include <stdexcept>
 #include <utility>
 
 void Patient::addNote(const std::string &note) { notes_.push_back(note); }
+
+const std::vector<std::string> &Patient::getNotes() const {
+  return notes_;
+}
 
 std::ostream &Patient::print(std::ostream &os) const {
   const auto *delimiter = "----------\n";

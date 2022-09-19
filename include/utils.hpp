@@ -12,7 +12,7 @@ namespace wl {
 using Container = std::vector<std::pair<PersonCondition, MRN>>;
 }
 
-inline constexpr const bool DEBUG = true;
+inline constexpr const bool DEBUG = false;
 template <typename... T>
 constexpr void dout(const std::string_view msg, T &&...args) {
   if (DEBUG) {

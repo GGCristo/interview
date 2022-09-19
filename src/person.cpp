@@ -1,5 +1,4 @@
-#include "../include/person/person.h"
-
+#include <person/person.hpp>
 #include <sstream>
 #include <stdexcept>
 

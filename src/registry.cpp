@@ -3,19 +3,59 @@
 Registry::Registry(std::unique_ptr<QueueStrategyI<wl::Container>> &&wlStrategy)
     : waitingList_(std::move(wlStrategy)) {}
 
-void Registry::add(std::unique_ptr<Person> &&person) {
+Person &Registry::add(std::unique_ptr<Person> &&person) {
   const std::string mrn = person->getMRN();
   const PersonCondition status = person->getStatus();
-  const auto [inserted, isInserted] = registry_.insert({mrn, std::move(person)});
+  const auto [inserted, isInserted] =
+      registry_.insert({mrn, std::move(person)});
   // The generator of combinations should already control that identifiers are
   // unique
-  assert(isInserted && "MRN identifiers should be unique in the registry"); // TODO check this
+  // NOLINTNEXTLINE
+  assert(isInserted && "MRN identifiers should be unique in the registry");
   if (status != PersonCondition::employee) {
-    waitingList_.Insert(std::make_pair(status, mrn));
+    waitingList_.insert(std::make_pair(status, mrn));
   }
+  return *inserted->second;
 }
 
-void Registry::remove(const MRN &mrn) {}
+bool Registry::remove(const MRN &mrn) {
+  auto it = registry_.find(mrn);
+  if (it == registry_.end()) {
+    return false;
+  }
+  const auto &[_, personPtr] = *it;
+  bool rmLst = waitingList_.remove({personPtr->getStatus(), mrn});
+  if (!rmLst) {
+    return false;
+  }
+  registry_.erase(it);
+  return true;
+}
+
+std::optional<wl::Container::value_type> Registry::pick() {
+  return waitingList_.pick();
+}
+
+std::optional<std::reference_wrapper<Person>> Registry::find(const MRN &mrn) {
+  auto it = registry_.find(mrn);
+  if (it == registry_.end()) {
+    return std::nullopt;
+  }
+  return *it->second;
+}
+
+std::vector<std::reference_wrapper<Person>> Registry::findByName(
+    std::string_view name) {
+  std::vector<std::reference_wrapper<Person>> result;
+  for (const auto &[mrn, personPtr] : registry_) {
+    if (personPtr->getName() == name) {
+      result.emplace_back(*personPtr);
+    }
+  }
+  return result;
+}
+
+size_t Registry::size() const { return registry_.size(); }
 
 std::ostream &Registry::print(std::ostream &os) const {
   os << "[Registry]\n";

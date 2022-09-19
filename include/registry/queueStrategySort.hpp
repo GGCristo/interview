@@ -6,11 +6,12 @@
 #include <registry/queueStrategyI.hpp>
 
 // Sort:
-// Insert: nlogn
-// Delete: nlogn
+// Insert: nlogn ||
+// Delete: nlogn ||
 // Pick: 1
-template <typename Container, typename Element = typename Container::value_type>
-class QueueStrategySort : public QueueStrategyI<Container, Element> {
+template <typename Container>
+class QueueStrategySort : public QueueStrategyI<Container> {
+  using Element = typename Container::value_type;
   void Insert(Container &container, Element &&value) override {
     if (container.empty()) {
       container.push_back(std::forward<Element>(value));
@@ -21,14 +22,15 @@ class QueueStrategySort : public QueueStrategyI<Container, Element> {
         std::forward<Element>(value));
   }
 
-  void Remove(Container &container, const Element &value) override {
+  bool Remove(Container &container, const Element &value) override {
     const auto it = std::lower_bound(container.begin(), container.end(), value);
     if (it == container.end() || *it != value) {
       dout("QueueStrategySort, Remove. The element is not in the container",
            container, value);
-      return;
+      return false;
     }
     container.erase(it);
+    return true;
   }
 
   std::optional<Element> Pick(Container &container) override {

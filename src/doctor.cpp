@@ -1,4 +1,4 @@
-#include "../include/person/doctor.h"
+#include <person/doctor.hpp>
 
 #include <fmt/core.h>
 

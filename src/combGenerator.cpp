@@ -1,4 +1,4 @@
-#include "../include/person/combGenerator.h"
+#include <person/combGenerator.hpp>
 #include <algorithm>
 
 NumGenerator::NumGenerator(std::size_t size) noexcept : size_(size) {}

@@ -7,25 +7,27 @@
 
 // Heap:
 // Insert: logn ||
-// Delete: nlogn
-// Pick: logn ||
-template <typename Container, typename Element = typename Container::value_type>
-class QueueStrategyHeap : public QueueStrategyI<Container, Element> {
+// Delete: nlogn ||
+// Pick: logn
+template <typename Container>
+class QueueStrategyHeap : public QueueStrategyI<Container> {
+  using Element = typename Container::value_type;
   void Insert(Container &container, Element &&value) override {
     container.push_back(std::forward<Element>(value));
     std::push_heap(container.begin(), container.end());
   }
 
-  void Remove(Container &container, const Element &value) override {
+  bool Remove(Container &container, const Element &value) override {
     auto it = std::find(container.begin(), container.end(), value);
     if (it == container.end()) {
-      return;
+      return false;
     }
     // Erase
     std::swap(*it, container.back());
     container.pop_back();
 
     std::make_heap(container.begin(), container.end());
+    return true;
   }
 
   std::optional<Element> Pick(Container &container) override {

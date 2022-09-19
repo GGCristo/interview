@@ -2,11 +2,12 @@
 #include <memory>
 #include <utility>
 
-#include "../include/person/doctor.h"
-#include "../include/person/patient.h"
-#include "../include/registry/queueStrategyHeap.h"
-#include "../include/registry/queueStrategySort.h"
-#include "../include/registry/registry.h"
+#include "../include/person/doctor.hpp"
+#include <person/doctor.hpp>
+#include <person/patient.hpp>
+#include <registry/queueStrategyHeap.hpp>
+#include <registry/queueStrategySort.hpp>
+#include <registry/registry.hpp>
 
 int main() {
   const int age = 22;

@@ -19,6 +19,7 @@ class Patient : public Person {
     (notes_.push_back(notes), ...);
   }
   void addNote(const std::string &note);
+  [[nodiscard]] const std::vector<std::string> &getNotes() const;
   std::ostream &print(std::ostream &os) const override;
 
  private:

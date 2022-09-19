@@ -15,7 +15,7 @@ class Person {
   };
   virtual ~Person() = 0;
   Person(Person &&o) noexcept;
-  Person(const Person &) = delete;
+  Person(const Person&) = delete;
   Person &operator=(const Person &) = delete;
   Person &operator=(Person &&) = delete;
 
@@ -40,7 +40,6 @@ class Person {
    */
   static NumGenerator
       numGenerator_;  // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
-  // Medical registry number
   MRN mrn_;
   std::string name_;
   Gender gender_;
