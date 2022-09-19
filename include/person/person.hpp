@@ -3,7 +3,7 @@
 #include <string>
 
 #include <utils.hpp>
-#include <person/combGenerator.hpp>
+#include <person/numGenerator.hpp>
 
 class Person {
  public:

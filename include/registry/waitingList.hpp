@@ -22,33 +22,26 @@ class WaitingList {
  public:
   explicit WaitingList(std::unique_ptr<QueueStrategyI<Container>>&& strategy =
                            std::make_unique<QueueStrategyHeap<Container>>())
-      : queueStrategy_(std::move(strategy)) {
-    assert(queueStrategy_ != nullptr &&
+      : strategy_(std::move(strategy)) {
+    assert(strategy_ != nullptr &&
            "QueueStrategy has not been initialized");
   }
 
   void insert(Element&& value) {
-    queueStrategy_->Insert(container_, std::forward<Element>(value));
+    strategy_->Insert(container_, std::forward<Element>(value));
   }
-  // void insert(Element&& value) {
-  //   queueStrategy_->Insert(container_, std::move(value));
-  // }
-  //
-  // void insert(Element& value) { // TODO perfect forward?
-  //   queueStrategy_->Insert(container_, value);
-  // }
 
   bool remove(const Element& value) {
-    return queueStrategy_->Remove(container_, value);
+    return strategy_->Remove(container_, value);
   }
 
-  std::optional<Element> pick() { return queueStrategy_->Pick(container_); }
+  std::optional<Element> pick() { return strategy_->Pick(container_); }
 
   [[nodiscard]] size_t size() const { return container_.size(); }
 
   [[nodiscard]] const std::unique_ptr<QueueStrategyI<Container>>& strategy()
       const {
-    return queueStrategy_;
+    return strategy_;
   }
 
   // Useful for testing
@@ -65,5 +58,5 @@ class WaitingList {
 
  private:
   Container container_;
-  std::unique_ptr<QueueStrategyI<Container>> queueStrategy_;
+  std::unique_ptr<QueueStrategyI<Container>> strategy_;
 };
